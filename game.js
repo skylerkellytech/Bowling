@@ -23,6 +23,10 @@ const LANE_BOTTOM = HEIGHT - 48;
 const PIN_RADIUS = 13;
 const BALL_RADIUS = 16;
 const MAX_FRAMES = 10;
+const MAX_CURVE_NORMALIZATION = 180;
+const MAX_CURVE_PENALTY = 0.28;
+const CHAIN_REACTION_DISTANCE = 58;
+const POWER_PROBABILITY_NORMALIZER = 120;
 
 const state = {
   isRolling: false,
@@ -400,7 +404,7 @@ function knockPins(impactX, impactY, power, curve) {
       return;
     }
     const distance = Math.hypot(pin.x - impactX, pin.y - impactY);
-    const curveBoost = 1 - Math.min(0.28, Math.abs(curve) / 180);
+    const curveBoost = 1 - Math.min(MAX_CURVE_PENALTY, Math.abs(curve) / MAX_CURVE_NORMALIZATION);
     const threshold = reachableRadius * curveBoost;
     if (distance <= threshold) {
       hitPins.push(pin);
@@ -414,7 +418,7 @@ function knockPins(impactX, impactY, power, curve) {
         return;
       }
       const distance = Math.hypot(pin.x - candidate.x, pin.y - candidate.y);
-      if (distance < 58 && Math.random() < power / 120) {
+      if (distance < CHAIN_REACTION_DISTANCE && Math.random() < power / POWER_PROBABILITY_NORMALIZER) {
         toFall.add(candidate.id);
       }
     });
@@ -435,6 +439,9 @@ function knockPins(impactX, impactY, power, curve) {
 }
 
 function recordRoll(pinsDown) {
+  if (state.frameIndex >= MAX_FRAMES) {
+    return;
+  }
   state.frameRolls[state.frameIndex].push(pinsDown);
 }
 
