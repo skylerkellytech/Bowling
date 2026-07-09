@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bowling Blast</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <section class="hud">
+        <div>
+          <h1>Bowling Blast</h1>
+          <p class="subtitle">Roll through 10 frames, hook your shot, and blow up the pins.</p>
+        </div>
+        <button id="restartButton" type="button">Restart Game</button>
+      </section>
+
+      <section class="scoreboard-panel">
+        <div id="scoreboard" class="scoreboard" aria-live="polite"></div>
+        <div class="status-row">
+          <p id="statusText">Loading game…</p>
+          <p id="legendText">Controls: ← → move, Enter roll, Space lock curve</p>
+        </div>
+      </section>
+
+      <section class="game-panel">
+        <canvas id="gameCanvas" width="900" height="540" aria-label="Bowling game canvas"></canvas>
+        <aside class="controls-panel">
+          <button id="rollButton" type="button">Roll Ball</button>
+          <button id="curveButton" type="button">Lock Curve</button>
+          <div class="meter-block">
+            <div class="meter-header">
+              <span>Curve Quick Action</span>
+              <span id="curveReadout">Straight</span>
+            </div>
+            <div class="meter" aria-hidden="true">
+              <div class="meter-center"></div>
+              <div id="meterFill" class="meter-fill"></div>
+            </div>
+            <p class="meter-help">Time your press during the quick action window to add left or right hook.</p>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <script src="game.js"></script>
+  </body>
+</html>
