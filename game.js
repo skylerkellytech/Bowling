@@ -27,6 +27,13 @@ const MAX_CURVE_NORMALIZATION = 180;
 const MAX_CURVE_PENALTY = 0.28;
 const CHAIN_REACTION_DISTANCE = 58;
 const POWER_PROBABILITY_NORMALIZER = 120;
+const FALLBACK_RADIUS_MULTIPLIER = 1.2;
+const MIN_POWER_FOR_FALLBACK = 85;
+const BASE_ANIMATION_DURATION = 1500;
+const POWER_SPEED_FACTOR = 5;
+const AIM_PIXEL_MULTIPLIER = 4.3;
+const CURVE_HORIZONTAL_FACTOR = 1.4;
+const CURVE_SINE_AMPLITUDE = 3.2;
 
 const state = {
   isRolling: false,
@@ -429,7 +436,7 @@ function knockPins(impactX, impactY, power, curve) {
       .filter((pin) => !state.fallenPins.has(pin.id))
       .map((pin) => ({ pin, distance: Math.hypot(pin.x - impactX, pin.y - impactY) }))
       .sort((left, right) => left.distance - right.distance)[0];
-    if (nearest && nearest.distance < reachableRadius * 1.2 && power > 85) {
+    if (nearest && nearest.distance < reachableRadius * FALLBACK_RADIUS_MULTIPLIER && power > MIN_POWER_FOR_FALLBACK) {
       toFall.add(nearest.pin.id);
     }
   }
@@ -459,15 +466,15 @@ function releaseBall() {
   const curve = Number(curveControl.value);
 
   const start = performance.now();
-  const duration = 1500 - power * 5;
+  const duration = BASE_ANIMATION_DURATION - power * POWER_SPEED_FACTOR;
   const startX = WIDTH / 2;
-  const endX = WIDTH / 2 + aim * 4.3 + curve * 1.4;
+  const endX = WIDTH / 2 + aim * AIM_PIXEL_MULTIPLIER + curve * CURVE_HORIZONTAL_FACTOR;
   const endY = 198;
 
   const animate = (timestamp) => {
     const progress = Math.min((timestamp - start) / duration, 1);
     const eased = 1 - (1 - progress) ** 3;
-    const curveOffset = Math.sin(progress * Math.PI) * curve * 3.2;
+    const curveOffset = Math.sin(progress * Math.PI) * curve * CURVE_SINE_AMPLITUDE;
     const x = startX + (endX - startX) * eased + curveOffset;
     const y = HEIGHT - 80 - (HEIGHT - 278) * eased;
 
