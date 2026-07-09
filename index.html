@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bowling</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Arcade Bowling</p>
+          <h1>Roll a strike on desktop or mobile.</h1>
+          <p class="subtitle">
+            Tune your aim, power, and curve, then tap or click Throw Ball to send it down the lane.
+          </p>
+        </div>
+        <button id="resetGame" class="secondary-button" type="button">New Game</button>
+      </section>
+
+      <section class="game-layout">
+        <div class="lane-card">
+          <canvas id="gameCanvas" aria-label="Bowling lane" role="img"></canvas>
+          <div class="status-bar" aria-live="polite">
+            <div>
+              <span class="status-label">Frame</span>
+              <strong id="frameLabel">1</strong>
+            </div>
+            <div>
+              <span class="status-label">Roll</span>
+              <strong id="rollLabel">1</strong>
+            </div>
+            <div>
+              <span class="status-label">Pins Left</span>
+              <strong id="pinsLabel">10</strong>
+            </div>
+            <div>
+              <span class="status-label">Score</span>
+              <strong id="scoreLabel">0</strong>
+            </div>
+          </div>
+        </div>
+
+        <aside class="controls-card">
+          <div class="control-copy">
+            <h2>Controls</h2>
+            <p>Large sliders and buttons keep the game comfortable on smaller screens.</p>
+          </div>
+
+          <label class="control-group" for="aimControl">
+            <span>Aim</span>
+            <output id="aimValue">0°</output>
+            <input id="aimControl" type="range" min="-35" max="35" value="0" />
+          </label>
+
+          <label class="control-group" for="powerControl">
+            <span>Power</span>
+            <output id="powerValue">70%</output>
+            <input id="powerControl" type="range" min="45" max="100" value="70" />
+          </label>
+
+          <label class="control-group" for="curveControl">
+            <span>Curve</span>
+            <output id="curveValue">0</output>
+            <input id="curveControl" type="range" min="-30" max="30" value="0" />
+          </label>
+
+          <button id="throwBall" class="primary-button" type="button">Throw Ball</button>
+
+          <ul class="tips">
+            <li>Try a slight hook into the pocket for the best strike chance.</li>
+            <li>On mobile, drag the sliders with your thumb and tap Throw Ball.</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section class="score-card" aria-label="Scorecard">
+        <h2>Scorecard</h2>
+        <div id="scoreFrames" class="frames"></div>
+      </section>
+    </main>
+
+    <script src="game.js"></script>
+  </body>
+</html>

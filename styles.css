@@ -1,0 +1,287 @@
+:root {
+  color-scheme: dark;
+  --bg: #07111f;
+  --bg-elevated: rgba(9, 24, 44, 0.9);
+  --text: #eff4ff;
+  --muted: #a8b9d8;
+  --accent: #46a0ff;
+  --accent-strong: #1c74ff;
+  --line: rgba(255, 255, 255, 0.12);
+  --success: #52d273;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top, rgba(70, 160, 255, 0.14), transparent 36%),
+    linear-gradient(180deg, #081120 0%, #03070f 100%);
+  color: var(--text);
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.app-shell {
+  width: min(1120px, 100%);
+  margin: 0 auto;
+  padding: clamp(1rem, 3vw, 2rem);
+}
+
+.hero,
+.lane-card,
+.controls-card,
+.score-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+}
+
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: clamp(1rem, 3vw, 1.5rem);
+  margin-bottom: 1rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.35rem;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.8rem;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(1.9rem, 4vw, 3rem);
+}
+
+.subtitle {
+  margin-top: 0.6rem;
+  color: var(--muted);
+  max-width: 60ch;
+  line-height: 1.5;
+}
+
+.game-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+  gap: 1rem;
+}
+
+.lane-card {
+  padding: clamp(0.75rem, 2vw, 1rem);
+}
+
+#gameCanvas {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  display: block;
+  border-radius: 20px;
+  background: linear-gradient(180deg, #c98c49 0%, #b87936 100%);
+  touch-action: manipulation;
+}
+
+.status-bar {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.9rem;
+}
+
+.status-bar > div,
+.control-group,
+.tips li,
+.frame {
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.status-bar > div {
+  border-radius: 16px;
+  padding: 0.8rem;
+}
+
+.status-label {
+  display: block;
+  color: var(--muted);
+  font-size: 0.8rem;
+  margin-bottom: 0.3rem;
+}
+
+.controls-card {
+  padding: clamp(1rem, 3vw, 1.25rem);
+}
+
+.control-copy p {
+  color: var(--muted);
+  margin-top: 0.45rem;
+  line-height: 1.5;
+}
+
+.control-group {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 18px;
+  margin-top: 0.9rem;
+}
+
+.control-group input {
+  grid-column: 1 / -1;
+  width: 100%;
+  accent-color: var(--accent);
+  min-height: 2.5rem;
+}
+
+.control-group output {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.primary-button,
+.secondary-button {
+  min-height: 3.25rem;
+  border-radius: 999px;
+  border: none;
+  padding: 0.85rem 1.2rem;
+  font-weight: 700;
+}
+
+.primary-button {
+  width: 100%;
+  margin-top: 1rem;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 100%);
+  color: white;
+}
+
+.secondary-button {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--line);
+}
+
+.tips {
+  padding-left: 1.15rem;
+  margin: 1rem 0 0;
+  display: grid;
+  gap: 0.65rem;
+  color: var(--muted);
+}
+
+.tips li {
+  padding: 0.8rem 0.9rem;
+  border-radius: 14px;
+  line-height: 1.45;
+}
+
+.score-card {
+  margin-top: 1rem;
+  padding: clamp(1rem, 3vw, 1.25rem);
+}
+
+.frames {
+  display: grid;
+  grid-template-columns: repeat(10, minmax(82px, 1fr));
+  gap: 0.65rem;
+  overflow-x: auto;
+  padding-top: 0.85rem;
+}
+
+.frame {
+  border-radius: 18px;
+  padding: 0.75rem;
+  min-width: 82px;
+}
+
+.frame-number {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.frame-rolls,
+.frame-score {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.35rem;
+}
+
+.frame-rolls {
+  margin-top: 0.55rem;
+  min-height: 1.3rem;
+}
+
+.frame-score {
+  margin-top: 0.8rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--line);
+  font-weight: 700;
+}
+
+.frame.is-active {
+  border-color: rgba(82, 210, 115, 0.8);
+  box-shadow: inset 0 0 0 1px rgba(82, 210, 115, 0.35);
+}
+
+@media (max-width: 860px) {
+  .game-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .secondary-button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 560px) {
+  .app-shell {
+    padding: 0.75rem;
+  }
+
+  .hero,
+  .lane-card,
+  .controls-card,
+  .score-card {
+    border-radius: 20px;
+  }
+
+  .status-bar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .control-group {
+    padding: 0.9rem;
+  }
+
+  .frames {
+    grid-template-columns: repeat(10, minmax(76px, 1fr));
+  }
+}
