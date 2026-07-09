@@ -34,12 +34,14 @@
 
   const deckOrigin = { x: 450, y: 118 };
   const pinRadius = 9;
-  const CURVE_SCALE_FACTOR = 0.95;
+  const CURVE_INPUT_SCALE_FACTOR = 0.95;
+  const CURVE_METER_FREQUENCY = 10;
   const PIN_CHAIN_REACTION_RANGE = 120;
   const PIN_CHAIN_REACTION_BASE_CHANCE = 0.66;
   const PIN_IMPACT_ASSIST = 0.32;
   const PIN_IMPACT_ASSIST_RANGE = 240;
   const EXPLOSION_PARTICLE_COUNT = 18;
+  const MAX_DELTA_TIME = 0.033;
 
   const state = createInitialState();
 
@@ -263,7 +265,7 @@
 
     state.qte.locked = true;
     state.qte.active = false;
-    state.ball.targetCurve = Number((state.qte.value * CURVE_SCALE_FACTOR).toFixed(2));
+    state.ball.targetCurve = Number((state.qte.value * CURVE_INPUT_SCALE_FACTOR).toFixed(2));
     updateCurveReadout(state.ball.targetCurve);
     updateStatus(
       Math.abs(state.ball.targetCurve) < 0.1
@@ -306,7 +308,7 @@
 
     if (state.qte.active) {
       state.qte.timer += dt;
-      state.qte.value = Math.sin(state.qte.timer * 10);
+      state.qte.value = Math.sin(state.qte.timer * CURVE_METER_FREQUENCY);
       updateMeter(state.qte.value);
       finishQteIfNeeded();
     }
@@ -675,7 +677,7 @@
   }
 
   function loop(timestamp) {
-    const dt = Math.min(0.033, (timestamp - state.lastTime) / 1000 || 0);
+    const dt = Math.min(MAX_DELTA_TIME, (timestamp - state.lastTime) / 1000 || 0);
     state.lastTime = timestamp;
 
     updateBall(dt);
