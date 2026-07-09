@@ -9,9 +9,9 @@ A lightweight HTML5 bowling game with:
 
 ## Run locally
 
-Open `/home/runner/work/Bowling/Bowling/index.html` in a browser, or serve the repo root with a simple static server such as:
+Open `index.html` in a browser from the project directory, or serve the repo root with a simple static server such as:
 
 ```bash
-cd /home/runner/work/Bowling/Bowling
+cd Bowling
 python3 -m http.server 8000
 ```

@@ -34,6 +34,12 @@
 
   const deckOrigin = { x: 450, y: 118 };
   const pinRadius = 9;
+  const CURVE_SCALE_FACTOR = 0.95;
+  const PIN_CHAIN_REACTION_RANGE = 120;
+  const PIN_CHAIN_REACTION_BASE_CHANCE = 0.66;
+  const PIN_IMPACT_ASSIST = 0.32;
+  const PIN_IMPACT_ASSIST_RANGE = 240;
+  const EXPLOSION_PARTICLE_COUNT = 18;
 
   const state = createInitialState();
 
@@ -257,7 +263,7 @@
 
     state.qte.locked = true;
     state.qte.active = false;
-    state.ball.targetCurve = Number((state.qte.value * 0.95).toFixed(2));
+    state.ball.targetCurve = Number((state.qte.value * CURVE_SCALE_FACTOR).toFixed(2));
     updateCurveReadout(state.ball.targetCurve);
     updateStatus(
       Math.abs(state.ball.targetCurve) < 0.1
@@ -374,7 +380,11 @@
         const relation = distance(sourcePosition, pin.position);
         const impactDistance = distance(pin.position, impactPoint);
         const forwardBonus = pin.position.y >= sourcePosition.y ? 0.12 : 0.03;
-        const chance = 0.66 - relation / 120 + forwardBonus + Math.max(0, 0.32 - impactDistance / 240);
+        const chance =
+          PIN_CHAIN_REACTION_BASE_CHANCE -
+          relation / PIN_CHAIN_REACTION_RANGE +
+          forwardBonus +
+          Math.max(0, PIN_IMPACT_ASSIST - impactDistance / PIN_IMPACT_ASSIST_RANGE);
 
         if (Math.random() < chance) {
           fallen.add(pin.index);
@@ -474,8 +484,8 @@
   }
 
   function spawnExplosion(position) {
-    for (let index = 0; index < 18; index += 1) {
-      const angle = (Math.PI * 2 * index) / 18 + Math.random() * 0.2;
+    for (let index = 0; index < EXPLOSION_PARTICLE_COUNT; index += 1) {
+      const angle = (Math.PI * 2 * index) / EXPLOSION_PARTICLE_COUNT + Math.random() * 0.2;
       const speed = 85 + Math.random() * 130;
       state.explosions.push({
         x: position.x,
