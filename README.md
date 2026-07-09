@@ -12,6 +12,6 @@ A lightweight HTML5 bowling game with:
 Open `index.html` in a browser from the project directory, or serve the repo root with a simple static server such as:
 
 ```bash
-cd Bowling
+cd <project-directory>
 python3 -m http.server 8000
 ```
